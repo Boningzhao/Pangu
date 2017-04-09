@@ -1,0 +1,10 @@
+---
+- name: restart supervisord
+  service: name=supervisord state=restarted enabled=true
+
+- name: restart zookeeper
+  supervisorctl: name=zookeeper state=restarted
+
+- name: restart firewalld
+  service: name=firewalld state=restarted enabled=true
+
