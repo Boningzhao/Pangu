@@ -1,0 +1,40 @@
+---
+- name: Trans related shell to every node
+  file: path=~/keygen.sh state=touch owner=root mode=777
+
+- name: create the shell 
+  copy: src=keygen.sh dest=~/keygen.sh
+
+- name: Create a pubkey in every node
+  shell: ./keygen.sh
+
+- name: Create local dic for keys
+  file: path=/etc/keysfrom state=directory owner=root group=root mode=755
+  connection: local
+
+- name: Send pub_key to control node 
+  fetch: src=/root/.ssh/id_rsa.pub dest=/etc/keysfrom
+
+- name: Create local dic for keys
+  file: path=~/.ssh/key/{{ansible_fqdn.replace("-",".").replace("host.","")}} state=touch
+  connection: local
+
+- name: Take all keys into one dic
+  copy: src=/etc/keysfrom/{{ansible_fqdn.replace("-",".").replace("host.","")}}/root/.ssh/id_rsa.pub dest=~/.ssh/key/{{ansible_fqdn.replace("-",".").replace("host.","")}}
+  connection: local
+
+- name: Assemble all the keys
+  assemble: src=~/.ssh/key dest=~/.ssh/authorized_keys remote_src=false
+
+
+
+#  shell: cat /etc/keysfrom/{{ansible_fqdn.replace("-",".").replace("host.","")}}/root/.ssh/id_rsa.pub >>~/keys
+#  connection: local
+
+#- name: Combine all the pub_key into local file
+#  shell: cat  >>~/.ssh/keys
+#  connection: local
+
+#- name: send keys to every node
+#  copy: src=~/keys dest=~/.ssh
+
