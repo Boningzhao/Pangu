@@ -1,0 +1,12 @@
+---
+zookeeper_maxClientCnxns: 60
+zookeeper_client_port: 2181
+zookeeper_hosts: "{{ansible_fqdn}}:2181"
+run_mode: Install
+
+# Variables only for RedHat family
+zookeeper_version: 3.4.6
+zookeeper_dir: /opt/zookeeper-{{zookeeper_version}}
+zookeeper_data_dir: /var/lib/zookeeper
+zookeeper_log_dir: /var/log/zookeeper
+zookeeper_conf_dir: "{{ zookeeper_dir }}/conf"

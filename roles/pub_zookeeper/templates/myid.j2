@@ -1,0 +1,10 @@
+{%- if zookeeper_id is defined -%}
+{{ zookeeper_id }}
+{%- else -%}
+  {%- for node in groups['zookeeper'] -%}
+    {%- set url_host = node.split(':')[0] -%}
+    {%- if url_host == ansible_fqdn or url_host in ansible_all_ipv4_addresses -%}
+{{ loop.index }}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endif -%}

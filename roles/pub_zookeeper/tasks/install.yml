@@ -1,0 +1,40 @@
+---
+- name: copy zookeeper-rpm
+  copy: src=x86_64/zookeeper-3.4.6-1.x86_64.rpm dest=/opt
+
+- name: install zookeeper
+  yum: name=/opt/zookeeper-3.4.6-1.x86_64.rpm state=present
+
+- name: Setup ZooKeeper service
+  copy: dest="/etc/supervisord.d" src=zookeeper.ini
+  notify: restart supervisord
+
+- name: Setup zoo.cfg
+  template: dest="{{zookeeper_conf_dir}}/zoo.cfg" src=zoo.cfg.j2
+  notify:
+    - restart zookeeper
+
+- name: Create data_dir
+  file: path={{zookeeper_data_dir}} state=directory owner=root group=root mode=755
+
+- name: Create log_dir
+  file: path={{zookeeper_log_dir}} state=directory owner=root group=root mode=755
+
+- name: Setup myid
+  template: dest="{{zookeeper_data_dir}}/myid" src=myid.j2
+  notify:
+    - restart zookeeper
+
+- name: Enable 2181
+  firewalld: port=2181/tcp permanent=true state=enabled
+  notify: restart firewalld
+
+- name: Enable 2888
+  firewalld: port=2888/tcp permanent=true state=enabled
+  notify: restart firewalld
+
+- name: Enable 3888
+  firewalld: port=3888/tcp permanent=true state=enabled
+  notify: restart firewalld
+
+- meta: flush_handlers
