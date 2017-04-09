@@ -1,0 +1,5 @@
+---
+- name: Enable and start ui
+  sudo: yes
+  supervisorctl: name=ui state=started
+

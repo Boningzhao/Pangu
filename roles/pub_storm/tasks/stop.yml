@@ -1,0 +1,7 @@
+---
+- supervisorctl: name=nimbus state=stopped
+
+- supervisorctl: name=supervisor state=stopped
+
+- supervisorctl: name=ui state=stopped
+

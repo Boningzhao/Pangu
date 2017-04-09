@@ -1,0 +1,15 @@
+---
+- include: install.yml
+  when: run_mode == 'Install'
+
+- include: mstart.yml
+  when: run_mode == 'MStart'
+
+- include: uistart.yml
+  when: run_mode == 'Start'
+
+- include: sstart.yml
+  when: run_mode == 'SStart'
+
+- include: stop.yml
+  when: run_mode == 'Stop'

@@ -1,0 +1,4 @@
+---
+- name: Enable and start supervisor
+  sudo: yes
+  supervisorctl: name=supervisor state=started
