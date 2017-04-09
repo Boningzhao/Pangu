@@ -1,0 +1,31 @@
+---
+- name: install tinc
+  yum:  name=tinc state=present
+
+- name: create tinc folder
+  file: path=/etc/tinc/myvpn/hosts state=directory owner=root group=root mode=755
+
+- name: create tinc-up
+  template: src=tincup.ro.j2 dest=/etc/tinc/myvpn/tinc-up
+
+- name: create tinc-down
+  template: src=tincdo.ro.j2 dest=/etc/tinc/myvpn/tinc-down
+
+- name: change the mode of tinc-up
+  file: path=/etc/tinc/myvpn/tinc-up mode=111
+
+- name: change the mode of tinc-down
+  file: path=/etc/tinc/myvpn/tinc-down mode=111
+
+- name: create tinc.conf
+  template: src=tinc.conf.r.j2 dest=/etc/tinc/myvpn/tinc.conf
+
+- name: create tinc-host
+  template: src=route.j2 dest=/etc/tinc/myvpn/hosts/{{tinc_keyname.replace("-","")}}
+
+- name: create pri and pub keys
+  shell: tincd -n myvpn -K4096
+  
+- name: Setup Tinc service
+  copy: dest="/etc/supervisord.d" src=tinc.ini
+  notify: restart supervisord

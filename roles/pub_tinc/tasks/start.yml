@@ -1,0 +1,4 @@
+---
+- name: Enable and start tinc
+  sudo: yes
+  supervisorctl: name=tinc state=started

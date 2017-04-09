@@ -1,0 +1,16 @@
+---
+- include: stop.yml
+  when: run_mode == 'Stop'
+
+- include: install_r.yml
+  when: run_mode == 'Install_r'
+
+- include: install_n.yml
+  when: run_mode == 'Install_n'
+
+- include: connect.yml
+  when: run_mode == 'Connect'
+
+- include: start.yml
+  when: run_mode == 'Start'
+

@@ -1,0 +1,9 @@
+---
+tinc_interface: myvpn
+tinc_version: 1.1
+
+tinc_dir: /etc/tinc
+tinc_indir: /etc/tinc/{{tinc_interface}}
+tinc_ host: /etc/tinc/{{tinv_interface}}/hosts
+tinc_keyname: "{{ ansible_fqdn}}"
+route_name: host10202
