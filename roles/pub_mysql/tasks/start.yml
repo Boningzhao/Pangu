@@ -1,0 +1,4 @@
+---
+- name: Enable and start mysql
+  sudo: yes
+  supervisorctl: name=mysql state=started
