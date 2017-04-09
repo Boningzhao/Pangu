@@ -3,84 +3,84 @@
   hosts: all
   sudo: yes
   roles:
-    - ssh
+    - pub_ssh
 
 - name: install common components
   hosts: all
   remote_user: root
   sudo: yes
   roles:
-    - { role: common, ansible_user_pass: 'root', ansible_sudo_pass: 'root' }
+    - { role: pub_common, ansible_user_pass: 'root', ansible_sudo_pass: 'root' }
 
 - name: install zookeeper
   hosts: zookeeper
   remote_user: root
   sudo: yes
   roles:
-    - { role: zookeeper, run_mode: 'Install' }
+    - { role: pub_zookeeper, run_mode: 'Install' }
 
 - name: install kafka
   hosts: kafka
   remote_user: root
   sudo: yes
   roles:
-    - { role: kafka, run_mode: 'Install' }
+    - { role: pub_kafka, run_mode: 'Install' }
 
 - name: install redis
   hosts: redis
   remote_user: root
   sudo: yes
   roles:
-    - { role: redis, run_mode: 'Install' }
+    - { role: pub_redis, run_mode: 'Install' }
 
 - name: install tinc route
   hosts: tinc_route
   remote_user: root
   sudo: yes
   roles:
-    - { role: tinc, run_mode: 'Install_r' }
+    - { role: pub_tinc, run_mode: 'Install_r' }
 
 - name: install tinc
   hosts: tinc_node
   remote_user: root
   sudo: yes
   roles:
-    - { role: tinc, run_mode: 'Install_n' }
+    - { role: pub_tinc, run_mode: 'Install_n' }
 
 - name: exchange pub_key
   hosts: tinc_route,tinc_node
   remote_user: root
   sudo: yes
   roles:
-    - { role: tinc, run_mode: 'Connect' }
+    - { role: pub_tinc, run_mode: 'Connect' }
 
 - name: install storm
   hosts: storm
   remote_user: root
   sudo: yes
   roles:
-    - { role: storm, run_mode: 'Install' }
+    - { role: pub_storm, run_mode: 'Install' }
 
 - name: install hadoop
   hosts: hadoop
   remote_user: root
   sudo: yes
   roles:
-    - { role: hadoop, run_mode: 'Install' }
+    - { role: pub_hadoop, run_mode: 'Install' }
 
 - name: install MySQL
   hosts: mysql
   remote_user: root
   sudo: yes
   roles:
-    - { role: mysql, run_mode: 'Install' }
+    - { role: pub_mysql, run_mode: 'Install' }
     
 - name: install eThtest
   hosts: eThtest
   remote_user: root
   sudo: yes
   roles:
-    - { role: datacollect, run_mode: 'Install' }
+    - { role: pub_datacollect, run_mode: 'Install' }
 
 - name: install Data Part
   hosts: data_server
