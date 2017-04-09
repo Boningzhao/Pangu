@@ -1,0 +1,9 @@
+---
+- include: stop.yml
+  when: run_mode == 'Stop'
+
+- include: install.yml
+  when: run_mode == 'Install'
+  
+- include: start.yml
+  when: run_mode == 'Start'
