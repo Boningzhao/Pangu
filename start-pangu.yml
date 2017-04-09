@@ -4,60 +4,61 @@
   remote_user: root
   sudo: yes
   roles:
-    - { role: mysql, run_mode: 'Start' }
+    - { role: pub_mysql, run_mode: 'Start' }
 
 - name: Start redis
   hosts: redis
   remote_user: root
   sudo: yes
   roles:
-    - { role: redis, run_mode: 'Start' }
+    - { role: pub_redis, run_mode: 'Start' }
 
 - name: Start zookeeper
   hosts: zookeeper
   remote_user: root
   sudo: yes
   roles:
-    - { role: zookeeper, run_mode: 'Start' }
+    - { role: pub_zookeeper, run_mode: 'Start' }
 
-#- name: Start tinc
-#  hosts: tinc_hosts
-#  remote_user: root
-#  sudo: yes
-#  roles:
-#    - { role: tinc, run_mode: 'Start' }
+- name: Start tinc
+  hosts: tinc_hosts
+  remote_user: root
+  sudo: yes
+  roles:
+    - { role: pub_tinc, run_mode: 'Start' }
 
-#- name: Start kafka
-#  hosts: kafka
-#  remote_user: root
-#  sudo: yes
-#  roles:
-#    - { role: kafka, run_mode: 'Start' }
+- name: Start kafka
+  hosts: kafka
+  remote_user: root
+  sudo: yes
+  roles:
+    - { role: pub_kafka, run_mode: 'Start' }
 
-#- name: Start storm_master
-#  hosts: storm_master_host
-#  remote_user: root
-#  sudo: yes
-#  roles:
-#    - { role: storm, run_mode: 'MStart' }
+- name: Start storm_master
+  hosts: storm_master_host
+  remote_user: root
+  sudo: yes
+  roles:
+    - { role: pub_storm, run_mode: 'MStart' }
 
-#- name: Start storm_slave
-#  hosts: storm_slave_host
-#  remote_user: root
-#  sudo: yes
-#  roles:
-#   - { role: storm, run_mode: 'Start' }
+- name: Start storm_slave
+  hosts: storm_slave_host
+  remote_user: root
+  sudo: yes
+  roles:
+   - { role: pub_storm, run_mode: 'Start' }
 
-#- name: Start hadoop_master
-#  hosts: test
-#  remote_user: hadoop_master
-#  sudo: yes
-#  roles:
-#    - { role: hadoop, run_mode: 'MStart' }
+- name: Start hadoop_master
+  hosts: test
+  remote_user: hadoop_master
+  sudo: yes
+  roles:
+    - { role: pub_hadoop, run_mode: 'MStart' }
 
-#- name: Start hadoop_slave
-#  hosts: hadoop_slave
-#  remote_user: root
-#  sudo: yes
-#  roles:
-#    - { role: hadoop, run_mode: 'SStart' }
+- name: Start hadoop_slave
+  hosts: hadoop_slave
+  remote_user: root
+  sudo: yes
+  roles:
+    - { role: pub_hadoop, run_mode: 'SStart' }
+#this file only include basic tools
