@@ -1,0 +1,14 @@
+---
+- name: Ensure redis is installed.
+  yum: name=redis state=installed enablerepo=epel
+
+- name: Ensure Redis is configured.
+  template:
+    src: redis.conf.j2
+    dest: "{{ redis_conf_path }}"
+    mode: 0644
+  notify: restart redis
+
+- name: Setup Redis service
+  copy: dest="/etc/supervisord.d" src=redis.ini
+  notify: restart supervisord

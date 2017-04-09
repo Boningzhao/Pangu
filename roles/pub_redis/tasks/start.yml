@@ -1,0 +1,4 @@
+---
+- name: Enable and start redis
+  sudo: yes
+  supervisorctl: name=redis state=started
