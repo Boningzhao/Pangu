@@ -1,16 +1,16 @@
 ---
-#- name: ssh password less configure
-#  hosts: all
-#  sudo: yes
-#  roles:
-#    - ssh
+- name: ssh password less configure
+  hosts: all
+  sudo: yes
+  roles:
+    - ssh
 
-#- name: install common components
-#  hosts: all
-#  remote_user: root
-#  sudo: yes
-#  roles:
-#    - { role: common, ansible_user_pass: 'root', ansible_sudo_pass: 'root' }
+- name: install common components
+  hosts: all
+  remote_user: root
+  sudo: yes
+  roles:
+    - { role: common, ansible_user_pass: 'root', ansible_sudo_pass: 'root' }
 
 - name: install zookeeper
   hosts: zookeeper
@@ -26,58 +26,79 @@
   roles:
     - { role: kafka, run_mode: 'Install' }
 
-#- name: install redis
-#  hosts: redis
-#  remote_user: root
-#  sudo: yes
-#  roles:
-#    - { role: redis, run_mode: 'Install' }
+- name: install redis
+  hosts: redis
+  remote_user: root
+  sudo: yes
+  roles:
+    - { role: redis, run_mode: 'Install' }
 
-#- name: install tinc route
-#  hosts: tinc_route
-#  remote_user: root
-#  sudo: yes
-#  roles:
-#    - { role: tinc, run_mode: 'Install_r' }
+- name: install tinc route
+  hosts: tinc_route
+  remote_user: root
+  sudo: yes
+  roles:
+    - { role: tinc, run_mode: 'Install_r' }
 
-#- name: install tinc
-#  hosts: tinc_node
-#  remote_user: root
-#  sudo: yes
-#  roles:
-#    - { role: tinc, run_mode: 'Install_n' }
+- name: install tinc
+  hosts: tinc_node
+  remote_user: root
+  sudo: yes
+  roles:
+    - { role: tinc, run_mode: 'Install_n' }
 
-#- name: exchange pub_key
-#  hosts: tinc_route,tinc_node
-#  remote_user: root
-#  sudo: yes
-#  roles:
-#    - { role: tinc, run_mode: 'Connect' }
+- name: exchange pub_key
+  hosts: tinc_route,tinc_node
+  remote_user: root
+  sudo: yes
+  roles:
+    - { role: tinc, run_mode: 'Connect' }
 
-#- name: install storm
-#  hosts: storm
-#  remote_user: root
-#  sudo: yes
-#  roles:
-#    - { role: storm, run_mode: 'Install' }
+- name: install storm
+  hosts: storm
+  remote_user: root
+  sudo: yes
+  roles:
+    - { role: storm, run_mode: 'Install' }
 
-#- name: install hadoop
-#  hosts: hadoop
-#  remote_user: root
-#  sudo: yes
-#  roles:
-#    - { role: hadoop, run_mode: 'Install' }
+- name: install hadoop
+  hosts: hadoop
+  remote_user: root
+  sudo: yes
+  roles:
+    - { role: hadoop, run_mode: 'Install' }
 
-#- name: install MySQL
-#  hosts: mysql
-#  remote_user: root
-#  sudo: yes
-#  roles:
-#    - { role: mysql, run_mode: 'Install' }
+- name: install MySQL
+  hosts: mysql
+  remote_user: root
+  sudo: yes
+  roles:
+    - { role: mysql, run_mode: 'Install' }
+    
+- name: install eThtest
+  hosts: eThtest
+  remote_user: root
+  sudo: yes
+  roles:
+    - { role: datacollect, run_mode: 'Install' }
 
-#- name: install eThtest
-#  hosts: eThtest
-#  remote_user: root
-#  sudo: yes
-#  roles:
-#    - { role: datacollect, run_mode: 'Install' }
+- name: install Data Part
+  hosts: data_server
+  remote_user: root
+  sudo: yes
+  roles:
+    - { role: data, run_mode: 'Install' }
+    
+- name: install Monitor Part
+  hosts: monitor_server
+  remote_user: root
+  sudo: yes
+  roles:
+    - { role: monitor, run_mode: 'Install' }
+    
+- name: install NetWork Part
+  hosts: network_server
+  remote_user: root
+  sudo: yes
+  roles:
+    - {role: network, run_mode: 'Install' }
