@@ -1,0 +1,16 @@
+---
+- name: Enable and start namenode
+  sudo: yes
+  supervisorctl: name=namenode state=started
+
+- name: Enable and start datanode
+  sudo: yes
+  supervisorctl: name=datanode state=started
+  
+- name: Enable and start jobtracker
+  sudo: yes
+  supervisorctl: name=jobtracker state=started
+
+- name: Enable and start tasktracker
+  sudo: yes
+  supervisorctl: name=tasktracker state=started

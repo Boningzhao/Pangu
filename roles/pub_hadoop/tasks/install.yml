@@ -1,0 +1,65 @@
+---
+- name: Copy hadoop-2.6.3 file
+  copy: src=hadoop-2.6.3.tar.gz dest=/opt
+
+- name: uncompress hadoop-2.6.3
+  unarchive: src=/opt/hadoop-2.6.3.tar.gz dest=/opt
+
+- name: Setup Namenode service
+  copy: dest="/etc/supervisord.d" src=namenode.ini
+  notify: restart supervisord
+
+- name: Setup Jobtracker service
+  copy: dest="/etc/supervisord.d" src=jobtracker.ini
+  notify: restart supervisord
+
+- name: Setup Datanode service
+  copy: dest="/etc/supervisord.d" src=datanode.ini
+  notify: restart supervisord
+
+- name: Setup Tasktracker service
+  copy: dest="/etc/supervisord.d" src=tasktracker.ini
+  notify: restart supervisord
+
+- name: change mapred-site.xml
+  template: src=mapredsite.xml.j2 dest=/opt/hadoop-2.6.3/etc/hadoop/mapredsite.xml
+
+- name: rename mapred-site.xml
+  command: mv /opt/hadoop-2.6.3/etc/hadoop/mapredsite.xml /opt/hadoop-2.6.3/etc/hadoop/mapred-site.xml
+
+- name: change core-site.xml
+  template: src=coresite.xml.j2 dest=/opt/hadoop-2.6.3/etc/hadoop/coresite.xml
+
+- name: rename core-site.xml
+  command: mv /opt/hadoop-2.6.3/etc/hadoop/coresite.xml /opt/hadoop-2.6.3/etc/hadoop/core-site.xml
+
+- name: change hdfs-site.xml
+  template: src=hdfssite.xml.j2 dest=/opt/hadoop-2.6.3/etc/hadoop/hdfssite.xml
+
+- name: rename hdfs-site.xml
+  command: mv /opt/hadoop-2.6.3/etc/hadoop/hdfssite.xml /opt/hadoop-2.6.3/etc/hadoop/hdfs-site.xml
+
+- name: change yarn-site.xml
+  template: src=yarnsite.xml.j2 dest=/opt/hadoop-2.6.3/etc/hadoop/yarnsite.xml
+
+- name: rename yarn-site.xml
+  command: mv /opt/hadoop-2.6.3/etc/hadoop/yarnsite.xml /opt/hadoop-2.6.3/etc/hadoop/yarn-site.xml
+
+- name: modify hadoop-env.sh
+  template: src=hadoop-env.sh.j2 dest=/opt/hadoop-2.6.3/etc/hadoop/hadoop-env.sh
+
+- name: create pid dir
+  file: path=/opt/hadoop-2.6.3/pids state=directory owner=root group=root mode=755
+
+- name: create hadoop tmp dir
+  file: path=/home/root/hadoop-2.6.3 state=directory owner=root group=root mode=755
+
+- name: create hadoop dfs name direcrory
+  file: path=/home/root/hadoop-2.6.3/dfs/name state=directory owner=root group=root mode=755
+
+- name: create hadoop dfs data dir
+  file: path=/home/root/hadoop-2.6.3/dfs/data state=directory owner=root group=root mode=755
+
+- name: modify slaves
+  template: src=slaves.j2 dest=/opt/hadoop-2.6.3/etc/hadoop/slaves
+

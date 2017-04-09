@@ -1,0 +1,4 @@
+---
+- name: Enable and start datanode
+  sudo: yes
+  supervisorctl: name=datanode state=started
