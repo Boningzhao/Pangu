@@ -1,0 +1,44 @@
+---
+- name: install the EPEL repository
+  yum: name=epel-release state=present
+
+- name: install OpenJDK
+  yum: name=java-1.8.0-openjdk-devel state=present
+
+- name: install libpcap
+  yum: name=libpcap-devel state=present
+
+- name: copy jnetpcap-rpm
+  copy: src=x86_64/jnetpcap-1.3.0-1.x86_64.rpm dest=/opt
+
+- name: install python
+  yum: name=python2  state=present
+
+- name: install jnetpcap
+  yum: name=/opt/jnetpcap-1.3.0-1.x86_64.rpm state=present
+
+- name: move jnetpcap to lib
+  copy: src=jnetpcap.jar dest=/usr/lib/jvm/jre/lib/ext/jnetpcap.jar
+
+- name: move libjnet to lib
+  copy: src=libjnetpcap.so dest=/usr/lib/jvm/jre/lib/ext/libjnetpcap.so
+
+- name: install supervisor
+  yum: name=supervisor state=present
+
+- name: install firewalld
+  yum: name=firewalld  state=present
+
+- name: install wget
+  yum: name=wget state=present
+
+- name: install expect
+  yum: name=expect state=present
+
+- name: ext jar lib
+  shell: scp /etc/ansible/roles/common/files/libs/*.jar root@{{ansible_fqdn.replace("-",".").replace("host.","")}}:/usr/lib/jvm/jre/lib/ext
+  connection: local
+
+- service: name=firewalld state=started enabled=true
+
+- service: name=supervisord state=started enabled=true
